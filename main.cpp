@@ -1,3 +1,4 @@
+// C++ is used to create computer programs.
 //C++ Requires a Compiler to work correctly. Ensure you download either Code Blocks or Visual Studio Code
 //C++ works from top to bottom
 
