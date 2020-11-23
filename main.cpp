@@ -1,4 +1,5 @@
 //C++ Requires a Compiler to work correctly. Ensure you download either Code Blocks or Visual Studio Code
+//C++ works from top to bottom
 
 // This is how you handle a single line comment
 
@@ -18,6 +19,12 @@ using namespace std;
 //Honestly it is better to not include this line instead type in std::cout. However for short programs this can be kept it (Think hello world short)
 
 
+//Declaring a function outside the main function you can always declare it as void myFunction(); then define it after the main function down below:
+void myFunction(){
+    //myFunction() is the name of the function void means that the function does not have a return value
+    //Declared functions are not executed immediately they are saved for later use.
+    //code to be executed
+}
 
 
 
