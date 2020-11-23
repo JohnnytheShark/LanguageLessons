@@ -22,14 +22,31 @@ using namespace std;
 //Declaring a function outside the main function you can always declare it as void myFunction(); then define it after the main function down below:
 void myFunction(){
     //myFunction() is the name of the function void means that the function does not have a return value
+    //You can add as many parameters as you would like
     //Declared functions are not executed immediately they are saved for later use.
     //code to be executed
-}
+    // You can overload a function instead of having to define a whole new function. Still have to write it all out though.
+};
+
+void functionName(parameter1, parameter2,parameter3){
+    //Parameters acts as variables within the function
+    //You can default a parameter using an = sign like: string country = "USA"
+    //code to be executed.
+    // If you want it to return a value, instead of void use the data type that it will return
+};
 
 
-
-
-
+class MyClass { //Class declaration
+    public: //Access specifier. The following options are available outside the class
+        int myNum; //Attribute (int variable)
+        string myString; //Next Attribute
+        void myMethod(){ // Method of function available to the class. could always just use void myMethod(); then declare it outside the class
+            cout << "Hello World!";
+        };
+        MyClass(){ // Constructor are special methods that are automatically called when an object of a class is created. It has the same name as the class, followed by ():
+            cout << "Hello World";
+        };
+};
 
 
 int main(){
