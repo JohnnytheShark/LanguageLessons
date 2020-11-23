@@ -66,7 +66,7 @@ int main(){
    cout << myString[0]; //Outputs H
     //Strings can be accessed based on indexes such as the above line
     string fullName;
-    getline(cin,fullName);
+    //getline(cin,fullName);
     //Useful function to get multiple lines or words since cin considers a space as a terminating character
 
     /*
@@ -85,8 +85,18 @@ int main(){
     }
     Ternary Operator is available as well: 
     variable = (condition) ? expressionTrue : expressionFalse;
-    
+
     switch to specify many alternative blocks of code to be executed based on conditions
+    switch(expression){
+        case x:
+        code block
+        break;
+        case y:
+        code block
+        break;
+        default: 
+        codeblock
+    }
      */
 
 
