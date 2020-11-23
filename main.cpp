@@ -3,7 +3,7 @@
 // This is how you handle a single line comment
 
 /* Multiline notes are added in using the following format
-This file is used to describe all the various different methods available within c++ 
+This file is used to describe various different methods available within c++ 
 This serves as documentation for future projects and as reference
 */
 
@@ -43,8 +43,28 @@ int main(){
     //Console out I am your variable years old. end line.
    const int myNumber = 15;
    //Declares a constant that cannot be changed by you or anybody else unless changing this line
-
-
+   int p;
+   cout << "Type a number: ";
+   cin >> x;
+   //This is how you have the user put in sometype of information
+   cout << "Your number is: " << x;
+   //Console Out what the user typed in using a variable
+   /*
+   Arithmetic Operators and Comparison Operators: 
+    Same as JavaScript + - / * % ++ -- 
+   Comparison:
+    == Equal to != Not Equal > Greater than < Less than >= Greater than or equal to <= Less than or equal to
+   Logical Operators:
+   && Logical And
+   || Logical Or
+   ! Logical Not
+    */
+   string myString = "Hello";
+   cout << myString[0]; //Outputs H
+    //Strings can be accessed based on indexes such as the above line
+    string fullName;
+    getline(cin,fullName);
+    //Useful function to get multiple lines or words since cin considers a space as a terminating character
     return 0;
     //What the function returns 
 }
