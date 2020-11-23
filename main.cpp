@@ -7,7 +7,7 @@
 This file is used to describe various different methods available within c++ 
 This serves as documentation for future projects and as reference
 */
-
+//The following are considered preprocessor commands
 #include <iostream>
 // iostream stands for standard input-output stream. This header file contains definitions to objects.
 #include <cmath>
@@ -35,9 +35,10 @@ void functionName(parameter1, parameter2,parameter3){
     // If you want it to return a value, instead of void use the data type that it will return
 };
 
-
 class MyClass { //Class declaration
-    public: //Access specifier. The following options are available outside the class
+    public: //Access specifier. The following options are available outside the class.
+    //You also have available to you the words public, private (members cannot be accessed or viewed from outside the class or protected members )
+    // or protected members cannot be accessed from outside the class, however, they can be accessed in inherited classes.
         int myNum; //Attribute (int variable)
         string myString; //Next Attribute
         void myMethod(){ // Method of function available to the class. could always just use void myMethod(); then declare it outside the class
@@ -48,6 +49,21 @@ class MyClass { //Class declaration
         };
 };
 
+class MyOtherClass{
+    public:
+        int myNumber;
+};
+
+//Example of inheritance: Where the following class absorbs everything from MyClass
+class MySecondClass: public MyClass {
+    public:
+        string model = "Lessons";
+};
+
+//You can also inherit from multiple classes if needed just be putting a comma and the second class name
+class MyChildClass: public MyClass, public MyOtherClass{
+
+};
 
 int main(){
 // Main function that the program runs once it is compiled. It runs all the code synchronous (one line after another)
@@ -196,4 +212,36 @@ int main(){
   */
     return 0;
     //What the function returns 
-}
+};
+
+// Error Handling: 
+// try {
+//   // Block of code to try
+//   throw exception; // Throw an exception when a problem arise
+// }
+// catch () {
+//   // Block of code to handle errors
+// }
+
+
+
+//Side Notes: 
+/*
+If you want to work with files you can import the fstream library such as: 
+#include <fstream>
+Three classes available within it: 
+ofstream Creates and writes to files
+ifstream Reads from files
+fstream a combination of ofstream and ifstream: creates, reads, and writes to files
+Ensure when working with files to close them in your program: 
+MyFile.close();
+
+Compiling C++ programs requires you to work with four kinds of files: 
+Regular Source Code Files. These files contain function definitions and have names that end with .cc (mainly .cpp or .C)
+Header Files. These files contian class declarations, function declarations (also known as function prototypes) and various preprocessor statements.
+They are used to allow source code files to access externally-defined classes and functions. header files end in ".hh" or .h 
+Object files. These files are produced as the output of the compiler. They consist of function definitions in binary form, but they are not executable by themselves.
+Object files end in .o by convention, although on some operating systems it ends in .obj
+Binary Executables. These are produced as the output of a program called a "linker" The linker links together a a number of object files to produce a binary file which can be directly executed.
+Binary executables end in .exe
+*/
