@@ -9,6 +9,9 @@ This serves as documentation for future projects and as reference
 
 #include <iostream>
 // iostream stands for standard input-output stream. This header file contains definitions to objects.
+#include <cmath>
+// This is how you include the cmath library for math operations(functions)
+
 
 using namespace std;
 // Means that in the scope it is present, make all the things under the std namespace available without having to prefix std:: before each of them
@@ -32,7 +35,7 @@ int main(){
     int stores integers (whole numbers, without decimals) 10
     double stores floating point numbers, with decimals, such as 19.99
     string stores text such as "Hello World"
-    bool stores values with two states: true or false
+    bool stores values with two states: true or false think 0 as false and 1 as true
     */
 
    int myAge = 24;
@@ -65,6 +68,32 @@ int main(){
     string fullName;
     getline(cin,fullName);
     //Useful function to get multiple lines or words since cin considers a space as a terminating character
+
+    /*
+    Conditions and IF Statements:
+    C++ supports the usual logical conditions from mathematics that is what you put in parenthesis check below.
+    if to specify a block of code to be executed, if a specified condition is true
+    else to specify a block of code to be executed
+    else if to specify a new condition to test, if the first condition is false
+    if (condition){
+        block of code to be executed if the condition is true
+    } else if (condition 2) {
+        block of code to be executed if the conditional is false and condition2 is true
+    } 
+    else {
+        block of code to be executed if the condition is false
+    }
+    Ternary Operator is available as well: 
+    variable = (condition) ? expressionTrue : expressionFalse;
+    
+    switch to specify many alternative blocks of code to be executed based on conditions
+     */
+
+
+
+
+
+
     return 0;
     //What the function returns 
 }
