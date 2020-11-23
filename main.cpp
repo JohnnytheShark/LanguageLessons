@@ -238,7 +238,8 @@ MyFile.close();
 
 Compiling C++ programs requires you to work with four kinds of files: 
 Regular Source Code Files. These files contain function definitions and have names that end with .cc (mainly .cpp or .C)
-Header Files. These files contian class declarations, function declarations (also known as function prototypes) and various preprocessor statements.
+Header Files. These files contain class declarations, function declarations (also known as function prototypes) and various preprocessor statements.
+Typically they are just the declarations
 They are used to allow source code files to access externally-defined classes and functions. header files end in ".hh" or .h 
 Object files. These files are produced as the output of the compiler. They consist of function definitions in binary form, but they are not executable by themselves.
 Object files end in .o by convention, although on some operating systems it ends in .obj
