@@ -17,6 +17,14 @@ using namespace std;
 // Means that in the scope it is present, make all the things under the std namespace available without having to prefix std:: before each of them
 //Honestly it is better to not include this line instead type in std::cout. However for short programs this can be kept it (Think hello world short)
 
+
+
+
+
+
+
+
+
 int main(){
 // Main function that the program runs once it is compiled. It runs all the code synchronous (one line after another)
 
@@ -87,6 +95,8 @@ int main(){
     variable = (condition) ? expressionTrue : expressionFalse;
 
     switch to specify many alternative blocks of code to be executed based on conditions
+    break keyword is used to break out of the switch block
+    default code to run if no case match is available
     switch(expression){
         case x:
         code block
@@ -98,12 +108,68 @@ int main(){
         codeblock
     }
      */
+    
+    /*
+    Loops:
 
+    While Loop loops through a block of code as long as a specified condition is true:
 
+    while(condition){
+        code block to be executed
+    }
+    Example: 
+    int i = 0;
+    while (i <5){
+        cout << i << "\n";
+        i++;
+    }
+    do/while loop is a variant of the while loop. This loop will execute the code block once, before checking if the condition is true, then it will repeat
+    the loop as long as the condition is true.
+    do {
+        code block to be executed
+    }
+    while (condition);
 
+    For Loop is when you know how many times you want to loop through a block of code, use the for loop instead of a while loop:
+    for (statement 1; statement 2; statement 3){
+        code block to be executed
+    }
+    Statement 1 executed once before the execution of the code block.
+    Statement 2 defines the condition for executing the code block.
+    Statement 3 is executed (every time) after the code block has been executed.
+    Think JavaScript, example: 
+    for (int i = 0; i < 5; i++){
+        cout << i << "\n";
+    }
 
+    break and continue are available for loops (works same way as python and JavaScript)
+    */
 
+   /* Arrays:
+    Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value
+    type name[size];
+    exampe:
+    string cars[4] = {"Volvo","BMW","Ford","Mazda"}
+    int myNumbers[3] = {10, 20,30};
 
+    Accessing arrays:
+    name[index];
+    Changing Array:
+    name[index] = "new item";
+
+    You can ommit the array size but may overwrite it later on, you can ommit writing in all the variables at once if needed
+   */
+
+  /* 
+  References:
+  A reference variable refers to an existing variable is created with the & operator:
+  string food = "Pizza";
+  string &meal = food; Refers to food
+  cout << &food; outputs it's memory address 
+
+  Pointers:
+    string* ptr = &food; a pointer variable, with the name ptr, that stores the address of food
+  */
     return 0;
     //What the function returns 
 }
