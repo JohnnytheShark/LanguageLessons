@@ -270,4 +270,8 @@ catch (Exception e)
 finally {
     Block of code to handle after errors and to always run
 }
+
+You can also throw errors: 
+There are many exceptions available: 
+ArithmeticException, FileNotFoundException, IndexOutOfRangeException, TimeOutException, and more
 */
