@@ -10,6 +10,9 @@ work the same way as c++ comments */
 using System;
 using System.Linq;
 //System.Linq offers more methods for arrays
+using System.IO;
+//System.IO allows you to work with files. Has various methods to work with files
+
 
 class Car {
     public string color = "red"; //field or attribute the word public here is a attribute that can only be accessed by objects.
@@ -200,4 +203,71 @@ virual void would go into the base class
 
 then public override void function is what overrides the function in the base class
 
+Abstraction:
+Data Abstraction is the process of hiding certain details and showing only essential information to the user. Abstraction can be achieved with either abstract classes or interfaces
+Abstract class: is a restricted class that cannot be used to create objects (to acces it, it must be inherited from another class)
+Abstract Method: can only be used in a n abstract class and it does not have a body. The body is provided by the derived class
+An interface is a completely "abstract class", which can only contain abstract methods and properties (with empty bodies)
+It is considered good practice to start with the letter "I" at the beginning of an interface, as it makes it easier for yourself and others to remember that it is a interface and not a class.
+By default, members of an interface are abstract and public
+
+
+Interface
+interface IAnimal 
+{
+  void animalSound(); // interface method (does not have a body)
+}
+
+Pig "implements" the IAnimal interface
+class Pig : IAnimal 
+{
+  public void animalSound() 
+  {
+    The body of animalSound() is provided here
+    Console.WriteLine("The pig says: wee wee");
+  }
+}
+class Program 
+{
+  static void Main(string[] args) 
+  {
+    Pig myPig = new Pig();  // Create a Pig object
+    myPig.animalSound();
+  }
+}
+C# does not support "Mulitiple Inheritance" (A class can only inherit from one base class). However, it can be achieved with interfaces.
+
+
+An enum is a special "class" that represents a group of constants (unchangeable/read-only variables)
+enum Months
+{
+  January,    // 0
+  February,   // 1
+  March=6,    // 6
+  April,      // 7
+  May,        // 8
+  June,       // 9
+  July        // 10
+}
+
+static void Main(string[] args)
+{
+  int myNum = (int) Months.April;
+  Console.WriteLine(myNum);
+}
+
+*/
+
+/* Exception Handling: 
+try 
+{
+  //  Block of code to try
+}
+catch (Exception e)
+{
+  //  Block of code to handle errors
+}
+finally {
+    Block of code to handle after errors and to always run
+}
 */
