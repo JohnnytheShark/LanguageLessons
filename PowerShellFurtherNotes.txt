@@ -89,3 +89,241 @@ Enter-PSSession -ComputerName HyperV -Credential $Cred
 Exit-PSSession
 
 Automatic Authentication:
+Setting up an authenticated password file: 
+$MyPassword = Read-Host -AsSecureString | ConvertFrom-SecureString
+$MyPassword | Out-File -FilePath <FileLocation>
+You do need to put the password file in a safe location.
+$User = "MyUserName"
+$File = <FileLocation>
+$MyCredential= New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, (Get-Content $File | ConvertTo-SecureString) 
+The credentials will be populated 
+
+Passing Variable to Function: 
+Function Get-MyVms($Server){
+Write-Host "The Hyper-V server name was passed to the function is: " $Server
+Write-Host "The virtual machines on this server are:"
+Get-VM -ComputerName $Server
+}
+CLS
+$Server = "HyperV"
+Get-MyVMS $Server
+
+When declaring a global variable inside a function you need to preappend $Global: and that makes it a global variable
+
+Loops:
+For($i=1; $i -lt 11; $i++){
+Write-Host $i
+}
+
+$I = 1
+Do{
+Write-Host $I
+$I++
+}
+While ($I -lt 11)
+Write-Host('The Loop has ended')
+
+Do Until:
+$I=1
+Do{
+$I++
+}
+Until ($I -eq 11)
+
+Breaking out of a loop:
+
+$I=1
+Do {
+Write-Host $I
+If ($I -eq 10)
+{Break}
+$I++
+}
+While ($I -gt 0)
+Write-Host ('The loop has ended)
+
+For Each Loop:
+$Servers = @('Server1','Server2','Server3','Server4')
+ForEach ($Server in $Servers){
+Write-Host $Server}
+Write-Host ('The loop has completed.')
+
+Creating Progress Bar:
+For ($N = 1; $N -le 100; $N++){
+Write-Progress -ID 0 $N% Complete"
+#Write-Progress -Activity "Progress" -Status "$N% Complete:" -PercentComplete
+Start-Sleep -Milliseconds 250
+}
+
+Switch Statements: 
+
+Taking user input: 
+$A = Read-Host "Enter a letter from A to D"
+Write-Host 'You typed' $A
+
+Switch statements are great for filtering out what was typed in.
+Switch statements are case insensitive: 
+
+Switch($A){
+A{Write-Host 'You typed A}
+Default {Write-Host 'You typed an invalid letter.'}
+}
+You can put multiple variables into a switch statement and it will interpret one after the other
+Switch($A,$B){}
+
+
+Sorting: 
+Sort-Object <object> -desc (descending)
+$A.count -after assigning an output to a variable you can check the count of it
+
+Modules:
+PSM1 as the extension of the file
+Create the functions and then use:
+Export-ModuleMember -Function 'FunctionName'
+
+To have it installed in your powershell: 
+Go to Windows > System32 > WindowsPowerShell >v1.0 > Modules 
+Create a subfolder name it what you want to name the module. 
+File name needs to match the folder name FYI
+Then once that is set up use
+Import-Module <ModuleName>
+Then Command you are running.
+
+Automating Powershell Scripts:
+Windows Task Scheduler 
+Create Basic Task
+Name it what you want to name it 
+Start a program
+Program: Powershell.exe
+Add Arguments (Optional): -file <filename>
+You can append -NoExit to see it actually is running.
+Then to test go back to the main and right click and then hit run
+
+
+Command prompt doesn't know what to do with a powershell script, if you put the file name into it, it just opens it up in a notepad
+
+Turning your command prompt into a powershell environment type in powershell.exe
+
+Powershell.exe -file <filename> this will run your file
+
+Generating Alerts from a Script: 
+Send-MailMessage is obsolete 
+Not recommended not safe
+
+Alternatives: 
+[console]::beep(2000,1000)
+$User="Administrator"
+$Message="PowerShell needs to get your attention"
+MSG $User $Message
+Popup occurs on your computer 
+
+Add-Type -AssemblyName PresentationFramework
+[System.Windows.MessageBox]::Show('PowerShell needs to get your attention!')
+
+Best Practices for PowerShell Scripting: 
+Comments at the top:
+Written By
+Developed Date:
+Last Updated:
+Purpose: Reasoning for it
+
+#Comment lines for when separating functions
+
+Function X ($something){
+#Add comments within your functions to determine what it is doing.
+#That is specified in the $server variable
+}
+Function names: try to mimic powershell commandlets 
+
+Put white space between your functions
+Set your variables to Null to append a comment to it
+$Null
+
+Then after variables and functions start your script body
+
+Interact with Active Directory: 
+Querying the Active Directory: 
+Get-ADUser  all the users in the organization
+Get-ADUser -Filter * 
+Get-ADUser -Filter * | Select-Object Name
+Get-ADUser -Filter {Name -Like "*User*"} | Select-Object Name
+
+Get-ADUser <User> -Properties Department, Manager | Select-Object Name, Department, Manager
+
+Get-ADUser -Filter {Name -Like "*User*"}  -Properties Department, Manager | Select-Object Name, Department, Manager
+
+Get-ADUser -Filter {Department -eq "Finance"} - Property Department, Manager | Select-Object Name, Department, Manager
+
+Get-ADUser -Filter {Department -eq "Finance"} - Property Department, Manager, title | Select-Object Name, Department, title, Manager
+
+-Filter {Office -eq "Miami"}
+
+You can use compound filters: 
+-Filter {Office -eq "Miami -And Department -eq "IT"}
+
+	Create User Account: 
+	New-AdUser -Name "User23" -UserPrincipalName  User23@pshell.com
+	
+	Enable:
+	Enable-ADAccount -Identitiy <UserName>
+	You will need to set a password:
+	Set-ADAccountPassword -Identity <UserName>
+	Password ? If it doesn't have one just hit enter 
+	Then type in the new password
+	Repeat
+	Enable-ADAccount -Identity <UserName>
+	
+	Another way: 
+	New-AdUser -Name User24 -AccountPassword(Read-Host -AsSecureString "AccountPassword")
+	Enable-ADAccount -Identity User24
+	
+	New-ADUser -Name User25 -AccountPassword(Read-Host -AsSecureString "AccountPassword") -PassThru | Enable-ADAccount
+	
+	Bulk Create User Accounts:
+	Create Users.csv
+	Name,GivenName,Surname,SamAccountName,UserPrincipalName
+	User26,,,,
+	User27,,,,
+	
+	Import-CSV C:\Scripts\Users.csv | New-ADUser -PassThru | Set-ADAccountPassword -Reset -NewPassword (ConvertToSecureString -AsPlainText 'P@ssw0rd' -Force) -PassThru | Enable-ADAccount
+	
+	Modify User Accounts
+	Set-ADUser <UserName> -Office "Las Vegas"
+	Get-ADUser -Filter {Name -Like "*User*" -And Office -NotLike "*"} | Set-ADUser -Office -Miami
+	
+	Bulk:
+	
+	For ($A=25; $A -le 30; $A++)
+	{
+	$User  = "User$A"
+	Write-Host $User
+	Set-ADUser $User -Office "Something"
+	}
+	
+	Import-CSV <FileName> | ForEach-Object {Set AdUser $_Users -Department "Marketing"}
+	
+	Working with Active Directory Groups: 
+	Get-ADGroup
+	Get-ADGroup -Filter * -Properties Name | Select-Object Name
+	Get-ADGroupMember -Identity 'Domain Admins'
+	
+	Get-ADUser Administrator -Properties MemberOf | Select-Object Name, MemberOf | Format-List
+	
+	New-ADGroup -Name "Miami" -GroupCategory Security -GroupScope Global
+	
+	Get-ADGroup Miami | Add-ADGroupMember -Members <username>
+	
+	Get-ADGroup Miami -Properties Members | Select-Object Members
+	
+	Get-ADUser -Filter {Office -eq "Miami"}
+	Get-ADGroup Miami | Add-AddGroupMember
+	
+	Remove-ADGroup <GroupName>
+	
+Remote Sessions:
+You have to enable remoting
+Enable-PSRemoting -Force
+
+$Cred=Get-Credential
+Enter-PSSession -ComputerName <Name> -Credential $Cred
+
