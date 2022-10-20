@@ -1,0 +1,91 @@
+Get-Service VSS 
+Shortcut for Format-List is FL
+Shortcut for Format-Table is FT
+Some attributes may be enclosed in brackets meaning it can be drilled down since it is an object. 
+You can expand it by using -ExpandProperty flag
+so example: Select-Object -ExpandProperty <name of object>
+
+Creating variables like so:
+$VariableName = "1"
+
+Write-Host is the commandlet that we use to display text on the screen in powershell
+Powershell understands text interpolation such as: 
+Write-Host "The value of the A variable is $A" 
+Reassigning variables works in the way rewriting it:
+$B = "1" then writing $B = "2" writes over it 
+
+Three different types of data in powershell: String, Number, Array
+Data casting as a number you can use [Int]$A to cast it into a integer value
+Variables are cleared out when you close out of a powershell window
+
+Setting up an array:
+$MyArray = "A","B"."C"."D"
+
+Taking commandlets and assigning the outputs to variables:
+$X = Get-Process
+Indexing:
+$X[1]
+
+Hash Table:
+$Month = @{1="January"; 2="February"; 3="March"}
+
+Adding to a hash table $Month.Add(4,"April")
+$Month.Remove(4)
+
+For custom error messages you can use Try Catch statements inside of powershell and combining with write host
+`r`n is new line in powershell
+
+Comments are made with # at the beginning of the line. 
+Invoke-Expression is used to execute commands of a variable 
+
+Creating a function in powershell: 
+Funciton Do-Something{
+
+}
+
+Functions work from top to bottom
+
+You can use .net framework packages using the following syntax: 
+[Math]::SQRT(64)
+To get a list of commands you can do the following
+[Math].GetMethods() | Select-Object Name -Unique
+
+-eq = equals
+-ne = not equal
+-gt = greater than
+-lt = less than
+-ge greater than or equal
+-le less than or equal to
+
+Get-Process | Where-Object {$_.ProcessName -Like "*PowerShell*"} or use -NotLike
+If you know the exact value then use -Match
+You can use -Replace to replace a string in a text 
+However you need to assign it to a new variable to be able to see the changes. 
+
+-Contains is a bit stricter 
+-NotContains is the same thing
+
++= add a value to the original
+-= only works with numbers
+*= multiplication with numbers but with text it multiplies the string. 
+/= division
+%= divide then assign the remainder to the variable
+++ doubles the value
+-- decreases the value by 1
+-and check that both statements are correct
+(1 -eq 1) -and (1 -eq 2) = False
+-or operator checks to see if either the statements are true
+
+-xor checks that only one of the conditions are true and not both of the conditions (Powershell only) 
+
+-not = ! Basically not this
+
+Interactive Authentication: 
+Get-Credential Windows Powershell  window pops up
+$Cred = Get-Credential
+
+Remote Session: 
+Enter-PSSession -ComputerName HyperV -Credential $Cred
+Exit-PSSession
+
+Automatic Authentication:
