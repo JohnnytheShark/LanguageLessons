@@ -327,3 +327,175 @@ Enable-PSRemoting -Force
 $Cred=Get-Credential
 Enter-PSSession -ComputerName <Name> -Credential $Cred
 
+To have a script run in server you need to use the Invoke-Command
+$Session = New-PSSession -ComputerName <ComputerName> -Credential $Cred
+Set your Credentials prior to running it:
+$Cred = Get-Credential
+Then Invoke-Command -Session $Session -ScriptBlock {Get-VM | Select-Object Name}
+
+Collecting Data from Remote System
+$Session = New-PSSession -ComputerName <Computer>
+Invoke-Command -Session $Session -ScriptBlock {
+$MyVar = Get-VM
+$MyVar | Select-Object Name
+Exit-PSSession}
+$LocalResult = Invoke-Command -Session $Session -ScriptBlock {$MyVar}
+Exit-PSSession
+$LocalResult | Select-Object Name
+
+PowerShell Reporting: 
+Get-AdDUser User1 | Select-Object *
+
+You can set a property name like such: 
+
+Function Display-Output ($VM,$CPU){
+$obj = New Object PSObject
+$obj | Add-Member NoteProperty "VM Name" ($VM.Name)
+Write-Output $obj}
+
+	Creating CSV File:
+	$VMs = Get-VM -ComputerName <ComputerName>
+	ForEach ($VM in $VMs) {
+	$CPU = Get-VMPProcessor $VM.Name -ComputerName HyperV
+	Display-Output $VM $CPU | Export-CSV -Path <FilePath> -NoTypeInformation -append
+	}
+	
+	Creating TXT File:
+	Function Display-Output ($VM, $CPU){
+	
+	$obj | Add-Member NoteProperty "Reserve"($CPU.Reserve)
+	$CPU.Reserve | Add-Content <FilePath>
+	
+	Write-Output $Obj |Add-Content <FilePath>
+	}
+	
+	$A=$Null
+	$A | Out-File <FilePath>
+	
+	Instead of adding an object to the text file add in the variable name instead:
+	$VM.Name | Add-Content <FilePath>
+	
+	HTML:
+	Process {} Process block is used to provide record by record processing
+	ConvertTo-HTML 
+	$a="<style>"
+	$a = $a + "BODY{background-color: DarkSeaGreen;}"
+	$a = $a + "</style>"
+	ConvertTo-Html -Head $a -Body "<H2>Virtual CPU Infromation</H2>" | OutFile <FilePath>
+	
+Graphical Reports:
+#Load Assembly:
+Add-Type -AssemblyName System.Windows.Forms.DataVisualization
+#Chart Object:
+$Chart1 = New-Object System.Windows.Forms.DataVisualization.Charting.Chart
+$chart1.width = 500
+$chart1.height = 450
+$chart1.BackColor = [System.Drawing.Color]:: white
+
+#Title
+Void = hides the output of that particular command
+[void]$chart1.Titles.Add("Widget Sales")
+$chart1.Titles[0].Font = "Arial,13pt"
+$chart1.Titles[0].Alignment  "topLeft"
+
+#Chartarea
+$chartarea = New-Object System.Windows.Forms.DataVisualization.Charting.ChartArea
+$Chartarea.Name, AxisY.Title,AxisX.Title,AxisY.Interval = 1 ,AxisX.Interval = 1
+$Chart.ChartAreas.Add($chartarea)
+
+#Legend:
+$legend = New-Object System.Windows.Forms.DataVisualization.Charting.Legend
+Legend.name = "legend"
+Chart1.Legends.Add($legend)
+
+#Data Source
+$datasource1 = @{Red=5;Blue=9;Green=7;}
+[void]$chart1.Series.Add("Widget Sales")
+Chart1.series[widget sales].Charttype = column
+Borderwidth
+Isvisibleinlegend
+Points.Databindxy($Datasource1.keys, $DataSource1.values)
+
+#Display:
+
+$Form = New-Object Windows.Forms.Form
+$Form.Text = "PowerShell Chart"
+$Form.Width = 500
+$Form.Height = 500
+$Form.controls.add($chart1)
+Form.Add_shown({$form.activate()})
+Form.ShowDialog()
+
+$Chart1.SaveImage(<filepath>,'jpeg')
+Has to be jpeg not jpg
+
+$VMs = Get-VM -ComputerName HyperV
+ForEach($VM in $VMs){
+$CPU = Get-VMProcessor -ComputerName <Computername> $VM.Name
+$DataSource1 = $DataSource1 + @{$VM.Name = $CPU.Count}
+}
+
+Creating Basic GUI
+#Load Assemblies
+[System.Reflection.Assembly]::LoadWithPartialName("SystemWindows.Forms") | Out-Null
+[System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
+
+$Form = New-Object System.Windows.Forms.Form
+Form.Width = 525
+Form.Height = 350
+Form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::Fixed3D
+Form.Text <- Title
+Form.StartPosition = "CenterScreen"
+$Form.Add_KeyDown({If ($_.KeyCode -EQ "Enter"){})
+
+TextBox:
+
+New-Object System.Windows.Forms.TextBox
+New-Object System.Drawing.Size(100,200)
+
+Button:
+New-Object System.Windows.Forms.Button
+Button.Add_Click({PowerShellCommands})
+
+Working with Drop Down Lists: 
+New-Object System.Windows.Forms.ListBox
+VirtualMachines = Get-VM -ComputerName HyperV
+ForEach($VM in $VirtualMachines){
+[void] Listbox.items.add($VM.name
+}
+
+Button1.AddClick({$ChosenItem=$ListBox1.SelectedItem;Display-VMInfo $ChosenItem})
+Form.Controls.Remove()
+Form.Refresh() <- Important to actually see changes
+
+Advance Features: 
+Installing PowerShell 7
+Get-Host | Select-Object Version
+Go to google and get version 7 
+Powershell 7 can be installed alongside version 5
+
+Powershell Ternary Functions: 
+$A = 'Normal'
+$A -eq 'Normal' ? 'Healthy':'Unhealthy'
+
+Pipeline Chain Operators: 
+Get-Process || Select-Object Name double pipeline means if the first half of the command succeeds don't run the second half 
+Write-Error
+You can use && instead of || to run both commands
+Coalescing Operators:
+$A = $Null
+$B = 100
+$A ?? $B
+Show if its not -eq to null
+
+??= 
+If the value of the first object is null then assign it the value of following variable
+$A ??= $B
+
+Pipeline Parallelization:
+$VMs = 'VM1','VM2'
+
+$VMs | ForEach-Object{
+ForEach-Object -Parallel - Work with all the vms at the same time
+
+}-ThrottleLimit 5
